@@ -1,0 +1,4 @@
+2024/07/03 16:42:04 [emerg] 1#1: "daemon" directive is duplicate in /etc/nginx/nginx.conf:4
+2024/07/04 00:00:01 [notice] 28#28: signal process started
+2024/07/04 00:00:01 [notice] 27#27: signal process started
+2024/07/04 07:51:03 [emerg] 12#12: host not found in upstream "esignature-php-fpm:9000" in /etc/nginx/conf.d/upstream.conf:1

@@ -1,0 +1,95 @@
+openapi: 3.0.0
+info:
+  title: eSignature
+  version: 1.0.0
+servers:
+  - url: http://{{basedomain}}
+paths:
+  /api/v1/signup:
+    post:
+      tags:
+        - default
+      summary: Registration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Test name
+                email: test@test.com
+                password: Test1234
+                password_confirmation: Test1234
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/login:
+    post:
+      tags:
+        - default
+      summary: Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: test@test.com
+                password: Test1234
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/documents/upload:
+    post:
+      tags:
+        - default
+      summary: Signed document
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                document:
+                  type: string
+                  format: binary
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{token}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/documents/share-document:
+    post:
+      tags:
+        - default
+      summary: share document
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                document_id: 7
+                receiver_emails:
+                  - test2@test.com
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{token}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}

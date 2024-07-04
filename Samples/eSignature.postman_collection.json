@@ -1,0 +1,207 @@
+{
+	"info": {
+		"_postman_id": "ab765ea1-b51a-42df-8013-c50785524839",
+		"name": "eSignature",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28765014"
+	},
+	"item": [
+		{
+			"name": "Registration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Test name\",\n    \"email\": \"test@test.com\",\n    \"password\": \"Test1234\",\n    \"password_confirmation\" : \"Test1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseDomain}}/api/v1/signup",
+					"host": [
+						"{{baseDomain}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test@test.com\",\n    \"password\": \"Test1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseDomain}}/api/v1/login",
+					"host": [
+						"{{baseDomain}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Document upload",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "document",
+							"type": "file",
+							"src": "/Users/puvanarajan/Downloads/sample.pdf"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseDomain}}/api/v1/documents/upload",
+					"host": [
+						"{{baseDomain}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"documents",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signed document",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "document",
+							"type": "file",
+							"src": "/Users/puvanarajan/Downloads/sample.pdf"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseDomain}}/api/v1/documents/upload",
+					"host": [
+						"{{baseDomain}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"documents",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "share document",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"document_id\" : 7,\n    \"receiver_emails\" : [\n        \"test2@test.com\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseDomain}}/api/v1/documents/share-document",
+					"host": [
+						"{{baseDomain}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"documents",
+						"share-document"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseDomain",
+			"value": "localhost:8088",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYTJhZDc0ODA1YzVlOTljYWY5NmNmMDgwYTllMDhiZmUyZjYxZTgyNTlhMzQwYmVlZDVhMDYwZjE4MmM3MDc2ZGI4YmEyNmMzN2I0YTQzODAiLCJpYXQiOjE3MjAwNzcwMzIuODE5MTE5LCJuYmYiOjE3MjAwNzcwMzIuODE5MTIsImV4cCI6MTc1MTYxMzAzMi44MDc0MTEsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.hnkHiyyGQPgB_QHUNZsr1iNIvqoRQW5kQDFpCmE2qQ8QJzFBB7U3nM4Ol2MGqeY71GvULUb4JBDiP7q8dOXsqWNfN6-taziifeeVkqjbMq3t_Rf0C4C2U29w2nmC5mb0wBQk5wnuP-LHghHXMVPKMcmt8XIqmgO-39H9NZilRVaQ-M_3rhJ0Sc1hRmZIJ3GcMSzH2JP-MUoChGRnaMQGE7Ugd9DKbdCmQkdME6NZ3GtuBmxxYKkPVLAat9FT23o_IF1TPMOLfF8_U0oLE6FdQjr8eCShJb5B9UHu0amU9NTSnvxDJ4Ep6NCr3MGa-IgbPItgmFQR5gG5qoaALW-AO22_DX9Zh3_xy43noo_dD_9OuMu3pOjtIQYAeWTmQnlIKvOSuczwC2tHdGD_yBHsrvCIAFV3QQzACQJbgw8wns8Maphi8Y11lhoPJUFLpWqrzcG_816WWQZ9Pifal2LILAscbZ1Di2nh30OrH7zzO2nJgw3MLh6j_a-s3ePJT8wphRPNhr8PH1DwY0HT-O2eJFt8WnKKFM37vDOBfuER32JaOxH9C7Z_TB0SkiIe0lDhV0BNRAlTyNG9XsIVBQ42Gnh0DbJxEdd7XILCIIe1luAB4esei4_AGYqgR_BmN3Z24twNvTRhNMWOgwkLKGgVD9TpJ1r1f4-C6VmzIUYcAus",
+			"type": "string"
+		}
+	]
+}

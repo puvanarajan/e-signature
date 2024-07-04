@@ -1,0 +1,88 @@
+networks:
+    esignature-backend:
+        driver: bridge
+
+services:
+    esignature-nginx:
+        container_name: "esignature-nginx"
+        build:
+            context: "./docker/nginx"
+        depends_on:
+            - esignature-php-fpm
+        volumes:
+            - ./docker/nginx/ssl/:/etc/nginx/ssl
+            - './:/var/www/html'
+            - ./docker/logs/nginx/:/var/log/nginx
+            - ./docker/nginx/sites/:/etc/nginx/sites-available
+        ports:
+            - "${FORWARD_NGINX_PORT:-8088}:8080"
+        networks:
+            - esignature-backend
+
+    esignature-php-fpm:
+        container_name: "esignature-php-fpm"
+        working_dir: '/var/www/html'
+        user: "${WWWUSER}:${WWWGROUP}"
+        build:
+            context: "./docker/php-fpm"
+            args:
+                WWWGROUP: '${WWWGROUP}'
+                APP_USER: '${APP_USER:-www-data}'
+        volumes:
+            - './:/var/www/html'
+        networks:
+            - esignature-backend
+        expose:
+            - "9005"
+
+    esignature-mysql:
+        container_name: "esignature-mysql"
+        image: 'mysql'
+        ports:
+            - '${FORWARD_DB_PORT:-33010}:3310'
+        environment:
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ROOT_HOST: '%'
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_USER: '${DB_USERNAME}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+            MYSQL_TCP_PORT: 3310
+        volumes:
+            - 'esignature-mysql:/var/lib/mysql'
+        networks:
+            - esignature-backend
+        healthcheck:
+            test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
+            retries: 3
+            timeout: 5s
+
+    esignature-mailhog:
+        container_name: "esignature-mailhog"
+        image: 'mailhog/mailhog:latest'
+        environment:
+            - MH_UI_BIND_ADDR=0.0.0.0:8027
+            - MH_API_BIND_ADDR=0.0.0.0:8027
+            - MH_SMTP_BIND_ADDR=0.0.0.0:1027
+        ports:
+            - '${FORWARD_MAILHOG_PORT:-1027}:1027'
+            - '${FORWARD_MAILHOG_DASHBOARD_PORT:-8027}:8027'
+        networks:
+            - esignature-backend
+
+    esignature-redis:
+        container_name: "esignature-redis"
+        image: redis
+        command: redis-server --port 6383
+        ports:
+            - "${FORWARD_REDIS_PORT:-6383}:6383"
+        volumes:
+            - esignature-redis-data:/data
+        networks:
+            - esignature-backend
+
+volumes:
+    esignature-mysql:
+        driver: local
+    esignature-redis-data:
+        driver: local

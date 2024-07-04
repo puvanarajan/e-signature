@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Enums;
+
+enum ErrorCode: int
+{
+    case COMMON_ERROR = 4000;
+    case UNAUTHORIZED = 4001;
+    case VALIDATION_ERROR = 4003;
+    case MODEL_NOT_FOUND = 4004;
+    case ALREADY_VERIFIED = 4010;
+    case TOKEN_EXPIRED = 4011;
+    case INVALID_TOKEN = 4012;
+    case INACTIVE_USER_ACCOUNT = 4013;
+    case UNVERIFIED_EMAIL = 4014;
+    case USER_NOT_FOUND = 4015;
+    case ACTION_UNAUTHORIZED = 4016;
+    case INVALID_SIGNATURE = 4020;
+    case INVALID_SOCIAL_OAUTH_CODE = 4021;
+    case EXPIRED_SOCIAL_OAUTH_CODE = 4022;
+    case INVALID_PAYMENT_REQUEST = 4023;
+    case ALREADY_PAID = 4024;
+    case ALREADY_SIGNED = 4025;
+}
